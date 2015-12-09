@@ -1,0 +1,20 @@
+{
+  "name": "simpleserver",
+  "version": "1.0.0",
+  "description": "This is a very simple web server.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:landscape1250/nodejs.git"
+  },
+  "keywords": [
+    "first",
+    "nodejs",
+    "project"
+  ],
+  "author": "Jing Chen",
+  "license": "GPL-3.0"
+}
