@@ -3,19 +3,29 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Product = require('../models/product');
 
+//
+mongoose.Promise = global.Promise;
 
 router.get('/', (req, res, next) => {
     Product.find()
+        .select('name price created_date _id')
         .exec()
         .then(result => {
-            if (result.length >= 0) {
-                console.log(result);
-                res.status(200).json(result);
-            } else {
-                res.status(404).json({
-                    message: 'No entries found.'
-                });
-            }
+            const response = {
+                count: result.length,
+                products: result.map(product => {
+                    return {
+                        _id: product._id,
+                        price: product.price,
+                        name: product.name,
+                        request: {
+                            type: 'GET',
+                            url: 'http://localhost:3000/products/' + product._id
+                        }
+                    }
+                })
+            };
+            res.status(200).json(response);
         })
         .catch(err => {
             console.log(err);
@@ -54,11 +64,18 @@ router.post('/', (req, res, next) => {
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id)
+        .select('name price _id')
         .exec()
         .then(doc => {
             if (doc) {
                 console.log('From database', doc);
-                res.status(200).json(doc);
+                res.status(200).json({
+                    product: doc,
+                    request: {
+                        type: 'GET',
+                        url: 'http://localhost:3000/products'
+                    }
+                });
             } else {
                 res.status(404).json({
                     message: 'No valid entry found for provided id!'
@@ -83,8 +100,14 @@ router.patch('/:productId', (req, res, next) => {
     Product.update({ _id: id }, { $set: updatedOps })
         .exec()
         .then(result => {
-            console.log(result);
-            res.status(200).json(result);
+            // console.log(result);
+            res.status(200).json({
+                message: 'Product updated',
+                request: {
+                    type: 'GET',
+                    url: 'http://localhost:3000/products/' + id
+                }
+            });
         })
         .catch(err => {
             console.log(err);
@@ -100,7 +123,12 @@ router.delete('/:productId', (req, res, next) => {
         .exec()
         .then(result => {
             res.status(200).json({
-                result
+                message: 'Product deleted',
+                request: {
+                    type: 'POST',
+                    url: 'http://localhost:3000/products/',
+                    body: { name: 'String', price: 'Number' }
+                }
             });
         })
         .catch(err => {
