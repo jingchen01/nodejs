@@ -1,10 +1,6 @@
 const router = require('express').Router();
+const artMovieController = require('./../controllers/artMovieController');
 
-router.get('/', (req, res) => {
-    console.log(req.url);
-    console.log(req.body);
-    res.send('Art movies.');
-})
-
+router.route('/').get(artMovieController);
 
 module.exports = router;

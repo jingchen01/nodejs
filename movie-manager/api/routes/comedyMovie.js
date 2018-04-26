@@ -1,13 +1,7 @@
 const router = require('express').Router();
+const comedyMovieController = require('./../controllers/comedyMovieController');
 
-router.get('/', (req, res) => {
-    console.log(req.url);
-    console.log(req.body);
-    res.status(200).json({
-        message: 'Comedy movie.'
-    });
-});
-
+router.route('/').get(comedyMovieController);
 
 module.exports = router;
 
