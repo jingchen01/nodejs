@@ -1,9 +1,39 @@
+const ComedyMovie = require('./../models/comedyMovieModel');
+
 const getAll = (req, res) => {
-    console.log(req.url);
-    console.log(req.body);
-    res.status(200).json({
-        message: 'Comedy movie.'
-    });
+    ComedyMovie
+        .find()
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: 'Comedy movies',
+                movies: result
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: 'Internal server error.'
+            });
+        });
 }
 
-module.exports = getAll;
+const add = (req, res) => {
+    const movie = new ComedyMovie(req.body);
+    movie
+        .save()
+        .then(result => {
+            res.status(201).json({
+                movie: result
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: 'Internal server error.'
+            });
+        });
+}
+
+module.exports = {
+    add: add,
+    getAll: getAll
+};
