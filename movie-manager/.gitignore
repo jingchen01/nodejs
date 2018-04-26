@@ -181,9 +181,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 
 #!! ERROR: npm is undefined. Use list command to see defined gitignore types !!#
 
