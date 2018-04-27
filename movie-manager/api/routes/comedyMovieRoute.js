@@ -10,6 +10,10 @@ router.route('/:movieId').get(comedyMovieController.getById);
 // add one movie
 router.route('/').post(comedyMovieController.add);
 
+router.route('/:id')
+    .put(comedyMovieController.put)
+    .patch(comedyMovieController.patch);
+
 module.exports = router;
 
 
