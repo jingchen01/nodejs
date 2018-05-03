@@ -16,6 +16,7 @@
     "http": "0.0.0",
     "mongoose": "^5.0.16",
     "morgan": "^1.9.0",
+    "node-inspect": "^1.11.3",
     "nodemon": "^1.17.3"
   }
 }
